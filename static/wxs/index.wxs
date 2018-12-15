@@ -1,0 +1,84 @@
+/**
+ * @Author mileS.
+ * @Date 2018/11/13.
+ * @Description: .页面数据操作方法
+ */
+
+/**
+ * @Describe : 转换时间
+ * type 转换的类型   1  19001012   2 1900-12-01 3 1900年12月01日
+ */
+function getTransformTime(date,type=2){
+    if(!date){return ""}
+    var reg = getRegExp("[^0-9]", "g");
+    date = date.toString().replace(reg,"") ;
+    if(type==2){
+        date =  date.slice(0, 4) +"-"+ date.slice(4, 6) +"-"+ date.slice(6);
+    }else if(type==3){
+        date = date.toString();
+        date =  date.slice(0, 4) +"年"+ date.slice(4, 6) +"月"+ date.slice(6)+"日";
+    }
+    return date
+}
+
+/**
+ * @Describe : 性别
+ */
+function geSexName(type) {
+   if(type==1){
+       return "男"
+   }else if(type == 2){
+       return "女"
+   }else{
+       return ""
+   }
+}
+
+/**
+ * @Describe : 关系
+ */
+function relationType(type,use,note) {
+    var result =  [
+        "恋人","伴侣","家人",
+        "朋友","同事","其他"
+    ][type-1];
+    if(!use){
+        return result;
+    }else{
+        if(type==6 && note){
+            return note
+        }
+        return result
+    }
+}
+
+/**
+ * @Describe : 五行
+ */
+function element(el) {
+    var elements = ["金","木","水","火","土"],
+        names = ["gold","wood","water","fire","soil"];
+    var index = elements.indexOf(el) ;
+    return "../../static/img/element_"+ names[index]+".png";
+}
+
+/**
+ * @Describe : 个人信息对照
+ * 职业 教育 婚姻状况
+ */
+function mappingMode( map , cur , gap =1 ) {
+    var index = cur - gap ;
+    if( index<0 || index>=map.length ){
+        return ""
+    }
+    return map[ index ]
+}
+
+
+module.exports = {
+    getTransformTime: getTransformTime,
+    geSexName : geSexName,
+    relationType: relationType,
+    element:element,
+    mappingMode:mappingMode
+}
